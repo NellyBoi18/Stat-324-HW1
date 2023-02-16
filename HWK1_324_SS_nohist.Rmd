@@ -1,0 +1,154 @@
+---
+title: "Stats 324 Homework 1"
+author: "Nelson Lu"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+``` 
+
+*If an exercise asks you to use R, include a copy of the code and output. Please edit your code and output to be only the relevant portions.
+
+*If a problem does not specify how to compute the answer, you many use any appropriate method. I may ask you to use R or use manually calculations on your exams, so practice accordingly.
+
+*You must include an explanation and/or intermediate calculations for an exercise to be complete.
+
+## Basics of Statistics and Summarizing Data Numerically and Graphically (I)
+
+**Exercise 1**. A number of individuals are interested in the proportion of citizens within a county who will vote to use tax money to upgrade a professional baseball stadium in the upcoming vote. Consider the following methods:
+
+The **Baseball Team Owner** surveyed 8,000 people attending one of the baseball games held in the stadium. Seventy eight percent (78%) of respondents said they supported the use of tax money to upgrade the stadium.
+ 
+The **Pollster** generated 1,000 random numbers between 1-52,661 (number of county voters in last election) and surveyed the 1,000 citizens who corresponded to those numbers on the voting roll. Forty three percent (43\%) of respondents said they supported the use of tax money to upgrade the stadium.
+
+> a. What is the population of interest? What is the parameter of interest? Will this parameter ever be calculated?
+
+**Solution:**
+The population of interest is all county citizens who will vote in the next election. The parameter of interest is the proportion of citizens within a county who will vote to use tax money to upgrade the stadium in the upcoming vote. This parameter can be calculated after the vote.
+
+> b. What were the sample sizes used and statistics calculated from those samples? Are these simple random samples from the population of interest? 
+
+**Solution:**
+The Baseball Team Owner had a sample size of 8,000 and calculated a sample proportion of success of 78%. This was not a simple random sample because it targeted county citizens who were interested in baseball. The Pollster had a sample size of 1,000 and calculated a sample proportion of success of 43%. This was a simple random sample because it targeted all county citizens who all had an equal chance to be polled. 
+
+> c. The baseball team owner claims that the survey done at the baseball stadium will better predict the voting outcome because the sample size was much larger. What is your response?
+
+**Solution:**
+The survey done at the baseball stadium is not valid because the people that are likely to watch a baseball game in person are already biased since they enjoy baseball, therefore being more likely to vote for the upgrade. This survey was also not a simple random sample; meaning there was a biased number of people out of the entire population. The Pollster survey, even though having a smaller sample size, was a simple random sample; meaning that each person in the county, whether they support baseball or not, was just as likely to be chosen for the survey. 
+
+\vspace{1cm}
+
+
+**Exercise 2**. There are 12 numbers in a sample, and the mean is $\bar{x}=24$. The minimum of the sample is accidentally changed from 11.9 to 1.19.
+
+> a. Is it possible to determine the direction in which (increase/decrease) the mean ($\bar{x}$)changes? Or how much the mean changes? If so, by how much does it change? If not, why not?
+
+**Solution:**
+Yes, it is possible to determine the direction in which the mean changes and how much it changes. It decreased by 0.8925. This can be calculated by taking the difference between the two numbers and then dividing it by the number of numbers in the sample. The direction of change is just determined by in which direction the change took place (.ie 1.19 is less than 11.9, therefore the mean decreases)
+```{r}
+numSample = 12
+diff = 11.9 - 1.19
+xBar = diff / numSample
+xBar
+```
+
+
+> b. Is it possible to determine the direction in which the median changes? Or how much the median changes? If so, by how much does it change? If not, why not?
+
+**Solution:**
+The median does not change because there were no numbers added or removed from the sample. The sample size remained the same. Only the minimum number was replaced, so there would not be a change to the median.
+
+> c. Is it possible to predict the direction in which the standard deviation changes? If so, does it get larger or smaller? If not, why not? Describe why it is difficult to predict by how much the standard deviation will change in this case.
+
+**Solution:**
+The standard deviation gets larger however, it is difficult to predict by how much without actually calculating it because of the large difference between the two numbers, 11.9 and 1.19. 
+
+\vspace{1cm}
+
+
+**Exercise 3:** After manufacture, computer disks are tested for errors. The table below tabulates the number of errors detected on each of the 100 disks produced in a day. 
+
+| Number of Defects | Number of Disks |
+| - | - |
+|0 | 41 |
+|1 | 31 |
+|2 | 15 |
+|3 | 8 |
+|4 | 5 |
+
+> a. Describe the type of data that is being recorded about the sample of 100 disks, being as specific as possible.
+
+**Solution:**
+This type of data is a census because it is taking information from every unit in the population. In this case, 100 disks are produced every day, and each one is being sampled. It is also a statistic because the table is a numeric summary of the sample's characteristics. This data was gathered using an observational study since it gathered information about the samples without interfering with the process that produced the errors. The data can be categorized as discrete quantitative/numerical data. 
+
+> b. A frequency histogram showing the number of errors on the 100 disks is given below. Write the R code to produce this frequency histogram. Be sure to create useful labels. Hints: use the rep() function to define your defect data. Also use ylim and breaks to format your graph.
+
+```{r, include = FALSE}
+defects = c(rep(0, 41), rep(1, 31), rep(2, 15), rep(3, 8), rep(4, 5))
+# histo = hist(defects, breaks=seq(-1,4,1), labels=TRUE, ylim=c(0,50), main = 'Histogram of Defects', ylab = "Number of Disks", xlab= 'Number of Defects', xaxt="n")
+# axis(side=1,at=histo$mids,labels=seq(0,4))
+# I kept getting some error about some 'x' not counted when I tried getting the breaks in the middle of the bars so I found this solution online at https://stackoverflow.com/questions/13461837/centering-values-on-bars-in-histogram-in-r
+```
+
+```{r}
+Defects = c(rep(0, 41), rep(1, 31), rep(2, 15), rep(3, 8), rep(4, 5))
+hist(Defects, breaks=seq(0,5,1), labels=TRUE, ylim=c(0,45), yaxp=c(0,45,20), right=FALSE, ylab="Number of Disks", xlab="Number of Defects")
+```
+
+> c. What is the shape of the histogram for the number of defects observed in this sample? Why does that make sense in the context of the question?
+
+**Solution:**
+This histogram is right skewed. It makes sense because you want to have as little errors as possible to minimize costs, especially with something as expensive as computer disks. 
+
+> d. Calculate the mean and median number of errors detected on the 100 disks by hand and with R. How do the mean and median values compare and is that consistent with what we would guess based on the shape?
+
+**Solution:**
+```{r}
+meanByHand = sum(defects)/length(defects)
+meanByHand
+
+mean(defects)
+
+medianByHand = defects[(length(defects)/2)]
+medianByHand
+
+median(defects)
+```
+There is no difference between the mean and median values when calculating it by hand and letting R's pre-packaged functions calculate them. The mean and median values are also consistent with what we would guess based on the shape because the graph is right skewed so it would make sense for the mean and median to be around 1. 
+
+> e. Calculate the sample standard deviation ``by hand" and using R. Are the values consistent between the two methods? How would our calculation differ if instead we know that these 100 values were the whole population?  
+
+**Solution:**
+```{r}
+meanDataSet = sum(defects)/length(defects)
+sampleSDByHand = sqrt((1/99) * ((41*(0-meanDataSet)^2) + (31*(1-meanDataSet)^2) + (15*(2-meanDataSet)^2) + (8*(3-meanDataSet)^2) + (5*(4-meanDataSet)^2)))
+sampleSDByHand
+
+sd(defects)
+```
+The values are consistent between the two methods. The calculation would differ slightly if these 100 values were the whole population instead of a sample. The standard deviation would decrease by a small amount because we would be dividing by n (the total number of samples in the population, which is 100) instead of n-1 (99). 
+```{r}
+meanDataSet = sum(defects)/length(defects)
+populationSDByHand = sqrt((1/100) * ((41*(0-meanDataSet)^2) + (31*(1-meanDataSet)^2) + (15*(2-meanDataSet)^2) + (8*(3-meanDataSet)^2) + (5*(4-meanDataSet)^2)))
+populationSDByHand
+```
+
+
+> f. Construct a boxplot for the number of errors data using R with helpful labels.  Explain how the shape of the data (identified in (c) can be seen from the boxplot.
+
+**Solution:**
+```{r}
+boxplot(defects, horizontal=TRUE, ylim=c(0,4), xlab="Number of Defects", main="Disk Defect Boxplot")
+```
+
+The shape of the data identified in (c) from the histogram holds over for the boxplot. Using the boxplot, you can still tell that the data is right skewed because of how far the median is to the left. 
+
+> g.  Explain why the histogram is better able to show the discrete nature of the data than a boxplot. 
+
+**Solution:**
+A histogram is better able to show the discrete nature of the data than a boxplot because with this type of data, you want to see exactly how many errors were produced because you want to minimize it. You don't care about averages or outliers like what a boxplot would show you (unless you want to see the average number of errors go down but even then, you'll still want to know the exact number of disks with defects and how many)
+
